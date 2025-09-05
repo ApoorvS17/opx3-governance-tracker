@@ -32,5 +32,13 @@ for stage in filtered_df["Stage"].unique():
     st.subheader(f"📁 Stage: {stage}")
     for pointer in stage_df["Governance Pointer"].unique():
         pointer_df = stage_df[stage_df["Governance Pointer"] == pointer]
-        with st.expander(f"🔸 Activity: {pointer} ({len(pointer_df)} items)", expanded=False):
-            st.dataframe(pointer_df.reset_index(drop=True), use_container_width=True)
+        with st.expander(f"🔸 Activity: {pointer} ({len(pointer_df)} steps)", expanded=False):
+            display_df = pointer_df[[
+                "What to Do",
+                "Evidence/Artifact",
+                "Metric/Threshold",
+                "Status",
+                "Due Date",
+                "Owner"
+            ]].reset_index(drop=True)
+            st.dataframe(display_df, use_container_width=True)
