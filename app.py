@@ -12,6 +12,12 @@ df["Stage"] = df["Stage"].fillna(method="ffill")
 df["Governance Pointer"] = df["Governance Pointer"].fillna(method="ffill")
 df["Status"] = df["Status"].fillna("N/A")
 
+# Replace missing Owner values under CAR stage with 'CAR Team'
+df["Owner"] = df.apply(
+    lambda row: "CAR Team" if row["Stage"] == "Casual Analysis and Resolution (CAR)" and pd.isna(row["Owner"]) else row["Owner"],
+    axis=1
+)
+
 # Sidebar filter for Stage only
 st.sidebar.header("🔍 Filter Options")
 stage_options = df["Stage"].unique().tolist()
